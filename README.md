@@ -82,7 +82,7 @@ gbrain extract links --source db --include-frontmatter --source-id acme
 gbrain schema stats --source acme
 ```
 
-Or install it as a skillpack and let your AI agent walk the steps: `gbrain skillpack scaffold mattzimak/gbrain-company-brain`, then ask it to "connect my company brain to gbrain".
+Or let your AI agent walk the steps: install the skills with `gbrain skillpack scaffold mattzimak/gbrain-company-brain --workspace <your-agent-workspace>`, keep the clone above for the schema pack and lint CLI, then ask it to "connect my company brain to gbrain".
 
 To see the before and after on the sample brain, without touching your own gbrain: `./scripts/demo.sh`.
 

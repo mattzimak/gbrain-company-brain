@@ -26,7 +26,10 @@ other company types as unknown, and its catch-all rule retypes them to `note`.
 
 - `BRAIN`: absolute path to the company brain repo.
 - `SOURCE_ID`: short source name, for example the company slug.
-- `PACK_DIR`: this skillpack's root (where `schema/company-brain.yaml` lives).
+- `PACK_DIR`: a local clone of github.com/mattzimak/gbrain-company-brain (it holds
+  `schema/company-brain.yaml` and the lint CLI). `gbrain skillpack scaffold`
+  installs only the skills, so if no clone exists, ask where to put one and run
+  `git clone https://github.com/mattzimak/gbrain-company-brain <dir>`.
 
 Ask the user for `BRAIN` and `SOURCE_ID` if they are not clear. Never guess
 a path.
