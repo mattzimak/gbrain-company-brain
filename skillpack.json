@@ -1,0 +1,29 @@
+{
+  "api_version": "gbrain-skillpack-v1",
+  "name": "company-brain",
+  "version": "0.1.0",
+  "description": "(edit me) one-line description of the company-brain skillpack",
+  "author": "Your Name <you@example.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/your-user/skillpack-company-brain",
+  "gbrain_min_version": "0.36.0",
+  "skills": [
+    "skills/company-brain"
+  ],
+  "runbooks": {
+    "bootstrap": "runbooks/bootstrap.md"
+  },
+  "changelog": "CHANGELOG.md",
+  "unit_tests": [
+    "test/**/*.test.ts"
+  ],
+  "e2e_tests": [
+    "e2e/**/*.test.ts"
+  ],
+  "llm_evals": [
+    "evals/*.judge.json"
+  ],
+  "routing_evals": [
+    "skills/company-brain/routing-eval.jsonl"
+  ]
+}
