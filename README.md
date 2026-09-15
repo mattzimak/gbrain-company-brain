@@ -4,7 +4,7 @@ A [gbrain](https://github.com/garrytan/gbrain) skillpack that loads a **company 
 
 A company brain is a git repo of agent-readable Markdown: one file per customer, competitor, supplier, person, decision, meeting and weekly brief, plus canonical pages like `strategy.md`. The layout comes from [template-intelligence](https://github.com/agentmatik/template-intelligence), the template we run our own companies on.
 
-`gbrain skillpack doctor`: **10/10**. 27 unit tests, plus an end-to-end test against a real gbrain.
+[![CI](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml/badge.svg)](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml) `gbrain skillpack doctor`: **10/10**. 27 unit tests, plus an end-to-end test against a real gbrain, all run in CI.
 
 ## The problem it solves
 
