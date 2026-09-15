@@ -1,0 +1,225 @@
+# company-brain - schema pack for company brains in the template-intelligence layout
+#
+# A company brain is a git repo of agent-readable Markdown: one file per
+# customer, competitor, supplier, distributor, person, decision, meeting and
+# weekly brief, plus a handful of canonical root pages (company, strategy,
+# product, brand, ops, finance). Template: github.com/agentmatik/template-intelligence
+#
+# Why this pack exists: gbrain-base-v2 is a strict 15-type taxonomy whose
+# catch-all mapping rule retypes every undeclared type to `note`, and which
+# retypes `product` to `company`. A company brain synced onto a default brain
+# would lose `customer`, `decision`, `strategy` and friends the first time
+# unify-types runs. This pack extends gbrain-base-v2 (inheriting its types and
+# link verbs), declares the company-brain types, and declares no mapping
+# rules of its own - mapping_rules are child-only, so nothing gets retyped.
+#
+# Ordering: page_types are ordered by inferType priority. Entity folders come
+# first; root canon pages have no path prefix and are typed by frontmatter.
+
+api_version: gbrain-schema-pack-v1
+name: company-brain
+version: 0.1.0
+description: Typed page types, relationship verbs and filing rules for company brains in the template-intelligence layout
+author: Matt Zimak
+license: MIT
+homepage: https://github.com/mattzimak/gbrain-company-brain
+gbrain_min_version: 0.42.0
+extends: gbrain-base-v2
+borrow_from: []
+
+page_types:
+  # --- Entity folders: one file per organisation the company deals with ---
+  - name: customer
+    primitive: entity
+    path_prefixes:
+      - customers/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: competitor
+    primitive: entity
+    path_prefixes:
+      - competitors/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: supplier
+    primitive: entity
+    path_prefixes:
+      - suppliers/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: distributor
+    primitive: entity
+    path_prefixes:
+      - distributors/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  # --- Time series: dated, append-only records ---
+  - name: decision
+    primitive: temporal
+    path_prefixes:
+      - decisions/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: weekly
+    primitive: temporal
+    path_prefixes:
+      - weekly/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  # --- Staging: facts extracted from transcripts, not yet curated ---
+  - name: extracted-facts
+    primitive: annotation
+    path_prefixes:
+      - inbox/extracted/
+    aliases: []
+    extractable: false
+    expert_routing: false
+
+  # --- Pipeline and canon: typed by frontmatter (root files have no prefix) ---
+  - name: sales
+    primitive: concept
+    path_prefixes:
+      - sales/
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: strategy
+    primitive: concept
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: product
+    primitive: concept
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: brand
+    primitive: concept
+    aliases: []
+    extractable: false
+    expert_routing: false
+
+  - name: ops
+    primitive: concept
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: finance
+    primitive: concept
+    aliases: []
+    extractable: true
+    expert_routing: false
+
+  - name: runbook
+    primitive: concept
+    aliases: []
+    extractable: false
+    expert_routing: false
+
+link_types:
+  # Who is accountable for a page. Every template page carries `owner:`.
+  - name: owned_by
+    inverse: owns
+
+  # Sentence-level cues. gbrain binds a page_type inference to EVERY link out
+  # of that page type and ignores target_type, so these verbs use phrase
+  # regexes instead: "competes with [[x]]", "agreed in [[meetings/y]]".
+  # Regexes are case-sensitive and JS has no inline (?i), so first letters
+  # are written as character classes.
+  - name: competes_with
+    inverse: competes_with
+    inference:
+      regex: \b([Cc]ompetes? with|[Cc]ompetitor (of|to)|[Rr]ivals?)\b
+
+  - name: decided_in
+    inverse: decision_made
+    inference:
+      regex: \b([Aa]greed|[Dd]ecided|[Aa]pproved)\s+(in|at|during)\b
+
+  # The person inside an account who backs the deal: "champion", "sponsor".
+  - name: champion
+    inverse: champion_of
+    inference:
+      regex: \b([Cc]hampion|[Ss]ponsor|[Mm]ain contact|[Pp]oint of contact)\b
+
+frontmatter_links:
+  - page_type: customer
+    fields:
+      - owner
+    link_type: owned_by
+
+  - page_type: competitor
+    fields:
+      - owner
+    link_type: owned_by
+
+  - page_type: supplier
+    fields:
+      - owner
+    link_type: owned_by
+
+  - page_type: distributor
+    fields:
+      - owner
+    link_type: owned_by
+
+  - page_type: decision
+    fields:
+      - owner
+    link_type: owned_by
+
+  - page_type: decision
+    fields:
+      - supersedes
+    link_type: supersedes
+
+  - page_type: meeting
+    fields:
+      - attendees
+    link_type: attended
+
+enrichable_types:
+  - type: customer
+  - type: competitor
+
+filing_rules:
+  - kind: customer
+    directory: customers/
+    description: One file per named customer or active prospect
+  - kind: competitor
+    directory: competitors/
+    description: One file per competitor
+  - kind: supplier
+    directory: suppliers/
+    description: One file per supplier
+  - kind: distributor
+    directory: distributors/
+    description: One file per distributor or reseller
+  - kind: person
+    directory: people/
+    description: Team, advisors, partners and investors, one file each
+  - kind: decision
+    directory: decisions/
+    description: YYYY-MM-DD-slug.md, append-only and immutable once merged
+  - kind: meeting
+    directory: meetings/
+    description: YYYY-MM-DD-topic.md, distilled meeting notes
+  - kind: weekly
+    directory: weekly/
+    description: YYYY-Www.md, the weekly founder brief
