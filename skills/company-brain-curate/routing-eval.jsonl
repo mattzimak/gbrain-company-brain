@@ -1,0 +1,5 @@
+{"intent":"here is the transcript from the Acme QBR, update the brain","expected_skill":"company-brain-curate"}
+{"intent":"fold yesterday's extracted meeting facts into the customer pages","expected_skill":"company-brain-curate"}
+{"intent":"which pages in the company brain would this call change","expected_skill":"company-brain-curate"}
+{"intent":"append the new pilot numbers to the Acme timeline with a citation","expected_skill":"company-brain-curate"}
+{"intent":"we changed strategy in the board meeting, open a PR on the brain","expected_skill":"company-brain-curate"}

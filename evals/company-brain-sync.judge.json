@@ -1,0 +1,21 @@
+{
+  "task": "The company-brain-sync skill connects a company brain repo to gbrain. Score whether the run follows the skill's order (lint, install, activate with consent, add source, sync, extract with frontmatter, verify) and reports verified numbers instead of assumptions.",
+  "output": "{{output-from-skill}}",
+  "cases": [
+    {
+      "name": "clean brain, happy path",
+      "input": "Sync /brains/kestrel as source kestrel. Lint reports 0 errors.",
+      "criteria": "Runs lint, validates and activates the pack, adds the source, syncs, runs extract links with --source db --include-frontmatter, then reports typed coverage from gbrain schema stats and shows at least one owned_by or supersedes edge from gbrain graph as proof."
+    },
+    {
+      "name": "lint errors stop the sync",
+      "input": "Lint exits 1 with TYPE_UNDECLARED on partners/zeta.md and WRONG_FOLDER on people/acme.md.",
+      "criteria": "Stops before touching gbrain, lists both findings with their files, and asks the user to fix them or explicitly accept syncing with errors."
+    },
+    {
+      "name": "another pack is already active",
+      "input": "gbrain schema active reports gbrain-investor as the active pack.",
+      "criteria": "Tells the user that gbrain-investor is active and that switching to company-brain changes typing for the whole brain, and does not run gbrain schema use without the user's consent."
+    }
+  ]
+}

@@ -2,13 +2,15 @@
   "api_version": "gbrain-skillpack-v1",
   "name": "company-brain",
   "version": "0.1.0",
-  "description": "(edit me) one-line description of the company-brain skillpack",
-  "author": "Your Name <you@example.com>",
+  "description": "Schema pack and skills that load a template-intelligence company brain into gbrain with typed pages and typed relationships, then curate and query it safely",
+  "author": "Matt Zimak",
   "license": "MIT",
-  "homepage": "https://github.com/your-user/skillpack-company-brain",
-  "gbrain_min_version": "0.36.0",
+  "homepage": "https://github.com/mattzimak/gbrain-company-brain",
+  "gbrain_min_version": "0.42.0",
   "skills": [
-    "skills/company-brain"
+    "skills/company-brain-sync",
+    "skills/company-brain-curate",
+    "skills/company-brain-ask"
   ],
   "runbooks": {
     "bootstrap": "runbooks/bootstrap.md"
@@ -24,6 +26,8 @@
     "evals/*.judge.json"
   ],
   "routing_evals": [
-    "skills/company-brain/routing-eval.jsonl"
+    "skills/company-brain-sync/routing-eval.jsonl",
+    "skills/company-brain-curate/routing-eval.jsonl",
+    "skills/company-brain-ask/routing-eval.jsonl"
   ]
 }

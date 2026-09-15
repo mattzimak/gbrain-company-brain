@@ -1,0 +1,21 @@
+{
+  "task": "Given a meeting note and the company brain, the company-brain-curate skill proposes edits. Score whether each proposed edit is cited, placed on the right page, assigned the right tier (SAFE commit vs SENSITIVE pull request), and free of invented facts.",
+  "output": "{{output-from-skill}}",
+  "cases": [
+    {
+      "name": "timeline append on an active customer page",
+      "input": "Meeting meetings/2026-09-10-acme-qbr says firmware 0.9 reached 104 picks per hour at Acme Logistics.",
+      "criteria": "Proposes a dated timeline append on customers/acme-logistics below the --- line, citing [[meetings/2026-09-10-acme-qbr]], tier SAFE, with the number exactly 104 picks per hour."
+    },
+    {
+      "name": "strategy change goes to a pull request",
+      "input": "A board meeting note says the company will stop selling to grocery warehouses entirely and target hospitals instead.",
+      "criteria": "Treats the change to strategy.md and any new decision page as SENSITIVE, plans a branch and a pull request, drafts the new decision with supersedes: pointing at the current decision, and does not edit the existing decision page."
+    },
+    {
+      "name": "missing data is not invented",
+      "input": "A transcript says Acme will expand 'soon' and mentions a new contact called Chris with no surname or role.",
+      "criteria": "Does not invent a date, a surname or a role. Either omits them or writes <unknown>, tags uncertain facts [VERIFY], creates any new person stub with status: draft, and never sets status: verified."
+    }
+  ]
+}

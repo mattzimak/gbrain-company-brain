@@ -1,0 +1,5 @@
+{"intent":"who owns the Acme Logistics account","expected_skill":"company-brain-ask"}
+{"intent":"why did we move from grocery to 3PL warehouses","expected_skill":"company-brain-ask"}
+{"intent":"is the grocery focus decision still current","expected_skill":"company-brain-ask"}
+{"intent":"who is our champion inside Acme","expected_skill":"company-brain-ask"}
+{"intent":"give me a briefing on Acme before tomorrow's call","expected_skill":"company-brain-ask"}

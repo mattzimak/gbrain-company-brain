@@ -1,0 +1,21 @@
+{
+  "task": "Given the synced sample brain (Kestrel Robotics), the company-brain-ask skill answers a question. Score whether the answer is correct against the brain, cites the pages it used, uses typed edges where they exist, and states gaps instead of guessing.",
+  "output": "{{output-from-skill}}",
+  "cases": [
+    {
+      "name": "account ownership from a typed edge",
+      "input": "Who owns the Acme Logistics account, and who is our champion there?",
+      "criteria": "Answers Jane Doe (owned_by) and Sam Lee (champion), cites [[customers/acme-logistics]] and the two person pages, and does not add facts that are not in those pages."
+    },
+    {
+      "name": "superseded decision is reported as history",
+      "input": "Are we still focused on grocery warehouses?",
+      "criteria": "Says no: decisions/2026-05-02-focus-grocery is superseded by decisions/2026-08-20-focus-3pl, which was agreed in meetings/2026-08-19-gtm-review. Cites all three pages."
+    },
+    {
+      "name": "gap is stated, not filled",
+      "input": "What is Acme Logistics' annual contract value?",
+      "criteria": "States that the brain does not record the contract value, points to the page where it would belong, and does not estimate or invent a number."
+    }
+  ]
+}
