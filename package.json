@@ -1,0 +1,16 @@
+{
+  "name": "gbrain-company-brain",
+  "version": "0.1.0",
+  "description": "gbrain skillpack and schema pack for company brains in the template-intelligence layout",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "company-brain": "src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test test/",
+    "test:e2e": "bun test e2e/",
+    "lint:sample": "bun src/cli.ts lint fixtures/sample-brain"
+  }
+}
