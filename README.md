@@ -99,7 +99,9 @@ The e2e test runs when `gbrain` is on your PATH (or `GBRAIN_BIN` points at it) a
 
 ## Known gbrain limitations (0.50)
 
-Found while building this. Both are worked around here, reported upstream, and reproducible from this repo: [gbrain#5142](https://github.com/garrytan/gbrain/issues/5142) and [gbrain#5143](https://github.com/garrytan/gbrain/issues/5143).
+Found while building this. Both are worked around here, reported upstream, and reproducible from this repo: [gbrain#5142](https://github.com/garrytan/gbrain/issues/5142) and [gbrain#5143](https://github.com/garrytan/gbrain/issues/5143). A fix for the first is proposed in [gbrain#5153](https://github.com/garrytan/gbrain/pull/5153).
+
+How the pieces fit together, and why they are shaped this way: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 - **`gbrain extract links --source fs` ignores the active pack's page types.** It guesses the type from a hardcoded folder table (`people`, `companies`, `deals`, `meetings`, else `concept`), so pack-declared frontmatter links never fire on that path. Use `--source db`.
 - **Page-type link inference ignores `target_type`.** A verb bound to a page type labels every link out of that page, so `decided_in` and `competes_with` use phrase regexes instead. For the same reason, gbrain's built-in rule labels every link out of a meeting page `attended`, even one pointing at a decision.
