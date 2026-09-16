@@ -6,6 +6,8 @@ A company brain is a git repo of agent-readable Markdown: one file per customer,
 
 [![CI](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml/badge.svg)](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml) `gbrain skillpack doctor`: **10/10**. 27 unit tests, plus an end-to-end test against a real gbrain, all run in CI.
 
+![The same company brain in gbrain: default pack versus the company-brain pack](docs/demo.png)
+
 ## The problem it solves
 
 gbrain's default schema pack, `gbrain-base-v2`, is a strict 15-type taxonomy. Its catch-all rule retypes every page type it does not declare to `note`, and a second rule folds `product` into `company`.
@@ -97,7 +99,7 @@ The e2e test runs when `gbrain` is on your PATH (or `GBRAIN_BIN` points at it) a
 
 ## Known gbrain limitations (0.50)
 
-Found while building this. Both are worked around here and worth fixing upstream.
+Found while building this. Both are worked around here, reported upstream, and reproducible from this repo: [gbrain#5142](https://github.com/garrytan/gbrain/issues/5142) and [gbrain#5143](https://github.com/garrytan/gbrain/issues/5143).
 
 - **`gbrain extract links --source fs` ignores the active pack's page types.** It guesses the type from a hardcoded folder table (`people`, `companies`, `deals`, `meetings`, else `concept`), so pack-declared frontmatter links never fire on that path. Use `--source db`.
 - **Page-type link inference ignores `target_type`.** A verb bound to a page type labels every link out of that page, so `decided_in` and `competes_with` use phrase regexes instead. For the same reason, gbrain's built-in rule labels every link out of a meeting page `attended`, even one pointing at a decision.
