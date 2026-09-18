@@ -106,6 +106,11 @@ How the pieces fit together, and why they are shaped this way: [docs/ARCHITECTUR
 - **`gbrain extract links --source fs` ignores the active pack's page types.** It guesses the type from a hardcoded folder table (`people`, `companies`, `deals`, `meetings`, else `concept`), so pack-declared frontmatter links never fire on that path. Use `--source db`.
 - **Page-type link inference ignores `target_type`.** A verb bound to a page type labels every link out of that page, so `decided_in` and `competes_with` use phrase regexes instead. For the same reason, gbrain's built-in rule labels every link out of a meeting page `attended`, even one pointing at a decision.
 
+## Related
+
+- [template-intelligence](https://github.com/agentmatik/template-intelligence): the brain layout this pack targets, curation contract included.
+- [brain-curation-loop](https://github.com/agentmatik/brain-curation-loop): how such a brain gets written in the first place: an n8n extract tap, a nightly curator agent, and PR approval in Slack for sensitive changes.
+
 ## License
 
 MIT. The sample brain is fictional; any resemblance to real companies or people is a coincidence.
