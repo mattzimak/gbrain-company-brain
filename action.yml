@@ -1,0 +1,26 @@
+name: Lint a company brain
+description: Check a company brain (template-intelligence layout) before gbrain sync. Findings show up as annotations on the pull request.
+author: mattzimak
+branding:
+  icon: check-circle
+  color: orange
+inputs:
+  path:
+    description: Path to the brain inside the repository.
+    required: false
+    default: .
+  bun-version:
+    description: Bun version used to run the linter.
+    required: false
+    default: 1.3.12
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ inputs.bun-version }}
+    - name: Lint the brain
+      shell: bash
+      env:
+        BRAIN_PATH: ${{ inputs.path }}
+      run: bun "${{ github.action_path }}/src/cli.ts" lint "$BRAIN_PATH" --format github

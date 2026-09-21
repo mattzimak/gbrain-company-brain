@@ -24,6 +24,11 @@ jobs:
       - name: Lint the sample brain
         run: bun run lint:sample
 
+      - name: The published action lints the sample brain
+        uses: ./
+        with:
+          path: fixtures/sample-brain
+
       - name: Install gbrain
         run: |
           git clone https://github.com/garrytan/gbrain.git "$RUNNER_TEMP/gbrain"

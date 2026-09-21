@@ -1,6 +1,6 @@
 {
   "name": "gbrain-company-brain",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "gbrain skillpack and schema pack for company brains in the template-intelligence layout",
   "type": "module",
   "private": true,

@@ -4,7 +4,7 @@ A [gbrain](https://github.com/garrytan/gbrain) skillpack that loads a **company 
 
 A company brain is a git repo of agent-readable Markdown: one file per customer, competitor, supplier, person, decision, meeting and weekly brief, plus canonical pages like `strategy.md`. The layout comes from [template-intelligence](https://github.com/agentmatik/template-intelligence), the template we run our own companies on.
 
-[![CI](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml/badge.svg)](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml) `gbrain skillpack doctor`: **10/10**. 27 unit tests, plus an end-to-end test against a real gbrain, all run in CI.
+[![CI](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml/badge.svg)](https://github.com/mattzimak/gbrain-company-brain/actions/workflows/ci.yml) `gbrain skillpack doctor`: **10/10**. 32 unit tests, plus an end-to-end test against a real gbrain, all run in CI.
 
 ![The same company brain in gbrain: default pack versus the company-brain pack](docs/demo.png)
 
@@ -52,7 +52,7 @@ Both outputs above are real, from `scripts/demo.sh`.
 | Piece | What it does |
 |---|---|
 | [`schema/company-brain.yaml`](schema/company-brain.yaml) | Schema pack. Extends `gbrain-base-v2` with 14 company-brain page types, `owner` / `supersedes` / `attendees` frontmatter links, phrase-based verbs (`competes_with`, `decided_in`, `champion`) and filing rules. Declares no mapping rules. |
-| [`src/cli.ts lint`](src/lint.ts) | Checks a brain before sync: missing frontmatter, types the pack does not declare, pages in the wrong folder, undated decision filenames, `verified` pages without `last_verified`, wikilinks gbrain would drop, undated timeline entries. |
+| [`src/cli.ts lint`](src/lint.ts) | Also a [GitHub Action](action.yml). Checks a brain before sync: missing frontmatter, types the pack does not declare, pages in the wrong folder, undated decision filenames, `verified` pages without `last_verified`, wikilinks gbrain would drop, undated timeline entries. |
 | [`company-brain-sync`](skills/company-brain-sync/SKILL.md) | Lint, install and activate the pack (asking first if another pack is active), add the source, sync, extract typed links, verify coverage. |
 | [`company-brain-curate`](skills/company-brain-curate/SKILL.md) | Fold meeting facts into the brain. Safe, cited updates are committed; anything that changes strategy, decisions or verified pages goes to a pull request for a human. |
 | [`company-brain-ask`](skills/company-brain-ask/SKILL.md) | Read-only answers from typed edges, with page citations, freshness and stated gaps. |
@@ -88,10 +88,30 @@ Or let your AI agent walk the steps: install the skills with `gbrain skillpack s
 
 To see the before and after on the sample brain, without touching your own gbrain: `./scripts/demo.sh`.
 
+## Lint your brain in CI
+
+The linter ships as a GitHub Action. Add it to the repository that holds your brain, and every pull request that breaks the brain gets annotated on the file that broke it: a page in the wrong folder, a type the pack does not declare, a wikilink gbrain would drop.
+
+```yaml
+# .github/workflows/brain.yml
+name: Brain
+on: [pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mattzimak/gbrain-company-brain@v0.2.0
+        with:
+          path: .   # or the subfolder that holds the brain
+```
+
+Errors fail the job; warnings annotate without failing. The same output is available locally with `bun src/cli.ts lint <dir> --format github`. [template-intelligence](https://github.com/agentmatik/template-intelligence) runs this action on itself.
+
 ## Tests
 
 ```bash
-bun run test        # 27 unit tests: pack contract, lint rules, skills contract
+bun run test        # 32 unit tests: pack contract, lint rules, output formats, skills contract
 bun run test:e2e    # real gbrain, throwaway PGLite brain, isolated GBRAIN_HOME
 ```
 
